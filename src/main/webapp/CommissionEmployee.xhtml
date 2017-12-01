@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+<h:outputStylesheet library="css" name="screen.css"  />
+
+ <title>Commission Employee</title>
+</h:head>
+<h:body>
+<div id="header">
+	<div style="margin-left: 5%;float: left; width:150px;">
+		<h:form>
+		<p>Click here to log out.</p>
+		<h:commandButton styleClass="button" value="log out" action="#{CommissionEmployeeBean.Logout()}" />
+		</h:form>
+	</div>
+	<div style="float: right; margin-right: 5%;  width: 200px;">
+			<h:form>
+		  <p> Click here to change your payment method:</p>
+		   <h:commandButton styleClass="button" value="Change" action="#{CommissionEmployeeBean.ChangePM()}"/> 
+		   </h:form>
+	</div>
+		<h:outputText styleClass="title" style="margin-right: 30%; margin-top: -10%; float: center;" value="Payroll project"/> 
+		<br></br>
+		<h1  align="center">Commission Employee Control Panel</h1>
+		<br/>
+		<h:form>
+		<ol id="user" style="list-style-type:none;float:left;margin-top:-12%;margin-right: 20%;font-size:1.2em;border: 4px solid; background-color: white; width: 20%;">
+		<li>
+		<h:outputText styleClass="text-output"  value="Your Flat Salary: "/> 
+		<h:outputText styleClass="text-output"  value="#{CommissionEmployeeBean.getBase()}"/>
+		</li>
+		<li>
+		<h:outputText styleClass="text-output"  value="Commission percentage:  "/>
+		<h:outputText styleClass="text-output"  value="#{CommissionEmployeeBean.getCamount()}"/>
+		</li>
+		</ol>
+		</h:form>
+		<h:form>
+		<ol id="user" style="list-style-type:none;float:right;margin-top:-12%;margin-left: 20%;font-size:1.2em;border: 4px solid; background-color: white; width: 20%;">
+		<li>
+		<h:outputText styleClass="text-output"  value="Id: "/> 
+		<h:outputText styleClass="text-output"  value="#{CommissionEmployeeBean.getId()}"/>
+		</li>
+		<li>
+		<h:outputText styleClass="text-output"  value="Full Name:  "/>
+		<h:outputText styleClass="text-output"  value="#{CommissionEmployeeBean.getfullname()}"/>
+		</li>
+		<li>
+		<h:outputText styleClass="text-output"  value="your Union:  "/>
+		<h:outputText styleClass="text-output"  value="#{CommissionEmployeeBean.getUnioname()}"/>
+		</li>
+		<li>
+		 <h:outputText styleClass="text-output"  value="Payment Method:"/> 
+		 <h:outputText styleClass="text-output"  value="#{CommissionEmployeeBean.getPaymentMethodname()}"/>  
+		</li>
+		<li>
+			<h:outputText styleClass="text-output"  value="Payment Type:"/> 
+		   <h:outputText styleClass="text-output"  value="#{CommissionEmployeeBean.getPaymentMethodType()}"/>  
+		   </li>
+		</ol>
+	</h:form>
+</div>
+<div style="float:left;width: 50%; border-right: 2px solid;">
+	<h:form>
+			<h1 align="center">Your Sales Receipt</h1> 
+	<p:dataTable var="item" value="#{CommissionEmployeeBean.salesReceipts}" rows="10"
+                         paginator="true"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15">
+			<p:column headerText="amount" >
+            	<h:outputText  value="#{item.saleAmount}" />
+        	</p:column>
+			<p:column headerText="Timestamp">
+            	<h:outputText value="#{item.timeStamp}" />
+        	</p:column>
+		</p:dataTable>	
+	</h:form>
+	<div style="margin-bottom: -1%; margin-top: 2%;" align="center">
+	<h:form id="form_for_add_salesreceipt" >
+	   	<p:panelGrid>
+		   <p:row>
+		   <p:column><h:outputText styleClass="text-output"  value="Sale amount"/></p:column>
+		   <p:column><h:inputText   value="#{CommissionEmployeeBean.amount}"/></p:column>
+		   </p:row>
+		    <p:row>
+		   <p:column><h:outputText styleClass="text-output"  value="insert the timestap in the form (dd/MM/yyyy HH:mm:ss)"/></p:column>
+		   <p:column><h:inputText   value="#{CommissionEmployeeBean.timestamp}"/></p:column>
+		   </p:row>
+		</p:panelGrid>
+		  <h:commandButton styleClass="button" style="margin-top: 20px;" update=":msgDialog"  id="confirmbutton"  binding="#{CommissionEmployeeBean.confirmButton}"  value="Confirm" action="#{CommissionEmployeeBean.AddSaleReceipt()}"/>
+		  <p:dialog id="msgDialog" widgetVar="common" modal="true" appendToBody="true"
+   		 visible="#{not empty facesContext.messageList}">
+   		 <p:messages id="messagesInDialog" />
+		</p:dialog>
+	</h:form>
+	</div>
+	</div>
+	<div style="float:right;width: 49%; border-right: 2px solid;">
+	<h:form>
+			<h1 align="center">Your Service Charges</h1> 
+	<p:dataTable align="center" var="item" value="#{CommissionEmployeeBean.servicecharges}" rows="10"
+                         paginator="true"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15">
+			<p:column headerText="amount" >
+            	<h:outputText  value="#{item.chargeAmount}" />
+        	</p:column>
+			<p:column headerText="Timestamp">
+            	<h:outputText value="#{item.timeStamp}" />
+        	</p:column>
+        	<p:column headerText="Service">
+            	<h:outputText value="#{item.service}" />
+        	</p:column>
+		</p:dataTable>	
+	</h:form>
+	</div>
+</h:body>
+</html>

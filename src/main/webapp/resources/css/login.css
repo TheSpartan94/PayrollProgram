@@ -1,0 +1,16 @@
+form {
+     margin-top: 4.5em;
+	 display: inline-block; 
+	   padding: 1em;
+  font: 80%/1 sans-serif;
+  width: 100%;
+}
+#page{
+	text-align: center; 
+	font-size: 1.5em;
+}
+
+#text{
+	text-align: center; 
+	font-size: 1.5em;
+}

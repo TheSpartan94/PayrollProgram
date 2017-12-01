@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<h:outputStylesheet library="css" name="screen.css" />
+	<h:outputStylesheet library="css" name="pm.css" />
+
+
+	<title>Administrator - Payroll Result</title>
+</h:head>
+<h:body>
+<div id="header">
+	<div style="margin-left: 5%;float: left; width:150px;">
+		<h:form>
+		<p>Click here to log out.</p>
+		<h:commandButton styleClass="button" value="log out" action="#{AdministratorBean.Logout()}" />
+		</h:form>
+	</div>
+		<h:outputText styleClass="title" style="margin-right: 30%; margin-top: -10%; float: center;" value="Payroll project"/> 
+		<br></br>
+		<h1  align="center">Administrator Control Panel</h1>
+		<br/>
+		<h:form>
+		<ol id="user" style="list-style-type:none;float:right;margin-top:-12%;margin-left: 20%;font-size:1.2em;border: 4px solid; background-color: white; width: 20%;">
+		<li>
+		<h:outputText styleClass="text-output"  value="Id: "/> 
+		<h:outputText styleClass="text-output"  value="#{AdministratorBean.getId()}"/>
+		</li>
+		</ol>
+	</h:form>
+</div>
+<br/>
+	<div id="result_form">
+		<h:form>
+	<h1 align="center">Payroll Results</h1> 
+		<p:dataTable update=":msgDialog"  id="datagrid"  binding="#{PayrollResultBean.datagrid}"  var="item" value="#{PayrollResultBean.result}" rows="10"
+                         paginator="true"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15" text-align="center">
+         <p:column headerText="Result" >
+            	<h:outputText  value="#{item}" />
+        	</p:column>
+		</p:dataTable>
+			<h:commandButton value="Go back" action="#{PayrollResultBean.GoBack()}" />
+		 
+		  <p:dialog id="msgDialog" widgetVar="messageDialog" modal="true" appendToBody="true"
+   		 visible="#{not empty facesContext.messageList}">
+   		 <p:messages id="messagesInDialog" />
+		</p:dialog>
+		</h:form>
+	</div>
+</h:body>
+</html>

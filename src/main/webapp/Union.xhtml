@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+<h:outputStylesheet library="css" name="screen.css"  />
+<h:outputStylesheet library="css" name="pm.css"  />
+
+<title>Union</title>
+</h:head>
+<h:body>
+<div id="header">
+	<div style="margin-left: 5%;float: left; width:150px;">
+		<h:form>
+		<p>Click here to log out.</p>
+		<h:commandButton styleClass="button" value="log out" action="#{UnionBean.Logout()}" />
+		</h:form>
+	</div>
+		<h:outputText styleClass="title" style="margin-right: 30%; margin-top: -10%; float: center;" value="Payroll project"/> 
+		<br></br>
+		<h1  align="center">Union Control Panel</h1>
+		<br/>
+		<h:form>
+		<ol id="user" style="list-style-type:none;float:right;margin-top:-12%;margin-left: 20%;font-size:1.2em;border: 4px solid; background-color: white; width: 20%;">
+		<li>
+		<h:outputText styleClass="text-output"  value="Id: "/> 
+		<h:outputText styleClass="text-output"  value="#{UnionBean.getid()}"/>
+		</li>
+		<li>
+		<h:outputText styleClass="text-output"  value="Full Name:  "/>
+		<h:outputText styleClass="text-output"  value="#{UnionBean.getName()}"/>
+		</li>
+		<li>
+		<h:outputText styleClass="text-output"  value="Union Due:  "/>
+		<h:outputText styleClass="text-output"  value="#{UnionBean.getactualdue()}"/>
+		</li>
+		</ol>
+	</h:form>
+</div>
+<div align="center">
+   <h:form id="form_for_due">
+   		<p:panelGrid >
+		   <p:row>
+		   <p:column><h:outputText styleClass="text-output"  value="Change your Union due:"/></p:column>
+		   <p:column><h:inputText   value="#{UnionBean.due}"/></p:column>
+		   <p:column><h:commandButton  value="Confirm" action="#{UnionBean.changedue()}"/></p:column>
+		   </p:row>
+		</p:panelGrid>
+	</h:form>
+	</div>
+	<div style="float:left;width: 50%; border-right: 2px solid;">
+			<h1 align="center">Your Assessed Charges</h1> 
+	<h:form id="form_for_charge" >
+	<p:dataTable var="item" value="#{UnionBean.charges}" rows="10"
+                         paginator="true"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15">
+			<p:column headerText="amount" >
+            	<h:outputText  value="#{item.chargeAmount}" />
+        	</p:column>
+        	<p:column headerText="Service">
+            	<h:outputText value="#{item.service}" />
+        	</p:column>
+			<p:column headerText="Timestamp">
+            	<h:outputText value="#{item.timeStamp}" />
+        	</p:column>
+        	<p:column headerText="CF">
+            	<h:outputText value="#{item.employee.CF}" />
+        	</p:column>
+		</p:dataTable>	
+	</h:form>
+
+	<h:form id="form_for_add_charge" >
+	   	<p:panelGrid>
+		   <p:row>
+		   <p:column><h:outputText styleClass="text-output"  value="Charge Amount"/></p:column>
+		   <p:column><h:inputText   value="#{UnionBean.amount}"/></p:column>
+		   </p:row>
+		    <p:row>
+		   <p:column><h:outputText styleClass="text-output"  value="Description of the service"/></p:column>
+		   <p:column><h:inputText   value="#{UnionBean.service}"/></p:column>
+		   </p:row>
+		    <p:row>
+		   <p:column><h:outputText styleClass="text-output"  value="insert the timestap in the form (dd/MM/yyyy HH:mm:ss)"/></p:column>
+		   <p:column><h:inputText   value="#{UnionBean.timestamp}"/></p:column>
+		   </p:row>
+		    <p:row>
+		   <p:column><h:outputText styleClass="text-output"  value="fiscal code of the employee"/></p:column>
+		   <p:column><h:inputText   value="#{UnionBean.cf}"/></p:column>
+		   </p:row>
+		</p:panelGrid>
+		  <h:commandButton   update=":msgDialog"  id="confirmbutton"  binding="#{UnionBean.confirmButton}" value="Confirm" action="#{UnionBean.addCharge()}" />
+		 
+		  <p:dialog id="msgDialog" widgetVar="messageDialog" modal="true" appendToBody="true"
+   		 visible="#{not empty facesContext.messageList}">
+   		 <p:messages id="messagesInDialog" />
+		</p:dialog>
+	</h:form>
+	</div>
+		<div style="float:right;width: 49%;">
+	<h:form>
+			<h1 align="center">Employees Registered</h1> 
+	<p:dataTable align="center" var="item" value="#{UnionBean.employees}" rows="10"
+                         paginator="true"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15">
+			<p:column headerText="CF" >
+            	<h:outputText  value="#{item.CF}" />
+        	</p:column>
+			<p:column headerText="Full Name">
+            	<h:outputText value="#{item.fullName}" />
+        	</p:column>
+        	<p:column headerText="Payment">
+            	<h:outputText value="#{item.paymentmethod.type}" />
+        	</p:column>
+		</p:dataTable>	
+	</h:form>
+	</div>
+</h:body>
+</html>

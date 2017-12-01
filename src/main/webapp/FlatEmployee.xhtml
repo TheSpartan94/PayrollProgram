@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+<h:outputStylesheet library="css" name="screen.css"  />
+
+<title>Flat Employee</title>
+</h:head>
+<h:body>
+<div id="header">
+	<div style="margin-left: 5%;float: left; width:150px;">
+		<h:form>
+		<p>Click here to log out.</p>
+		<h:commandButton styleClass="button" value="log out" action="#{FlatEmployeeBean.Logout()}" />
+		</h:form>
+	</div>
+	<div style="float: right; margin-right: 5%;  width: 200px;">
+			<h:form>
+		  <p> Click here to change your payment method:</p>
+		   <h:commandButton styleClass="button" value="Change" action="#{FlatEmployeeBean.ChangePM()}"/> 
+		   </h:form>
+	</div>
+		<h:outputText styleClass="title" style="margin-right: 30%; margin-top: -10%; float: center;" value="Payroll project"/> 
+		<br></br>
+		<h1  align="center">Flat Employee Control Panel</h1>
+		<br/>
+		<h:form>
+		<ol id="user" style="list-style-type:none;float:left;margin-top:-12%;margin-right: 20%;font-size:1.2em;border: 4px solid; background-color: white; width: 20%;">
+		<li>
+		<h:outputText styleClass="text-output"  value="Your Salary: "/> 
+		<h:outputText styleClass="text-output"  value="#{FlatEmployeeBean.getSalary()}"/>
+		</li>
+		</ol>
+		</h:form>
+		<h:form>
+		<ol id="user" style="list-style-type:none;float:right;margin-top:-12%;margin-left: 20%;font-size:1.2em;border: 4px solid; background-color: white; width: 20%;">
+		<li>
+		<h:outputText styleClass="text-output"  value="Id: "/> 
+		<h:outputText styleClass="text-output"  value="#{FlatEmployeeBean.getId()}"/>
+		</li>
+		<li>
+		<h:outputText styleClass="text-output"  value="Full Name:  "/>
+		<h:outputText styleClass="text-output"  value="#{FlatEmployeeBean.getfullname()}"/>
+		</li>
+		<li>
+		<h:outputText styleClass="text-output"  value="your Union:  "/>
+		<h:outputText styleClass="text-output"  value="#{FlatEmployeeBean.getUnioname()}"/>
+		</li>
+		<li>
+		 <h:outputText styleClass="text-output"  value="Payment Method:"/> 
+		 <h:outputText styleClass="text-output"  value="#{FlatEmployeeBean.getPaymentMethodname()}"/>  
+		</li>
+		<li>
+			<h:outputText styleClass="text-output"  value="Payment Type:"/> 
+		   <h:outputText styleClass="text-output"  value="#{FlatEmployeeBean.getPaymentMethodType()}"/>  
+		   </li>
+		</ol>
+	</h:form>
+</div>
+	<div style="float:center;width: 100%" >
+	<h:form>
+			<h1 align="center">Your Service Charges</h1> 
+	<p:dataTable align="center" var="item" value="#{FlatEmployeeBean.servicecharges}" rows="10"
+                         paginator="true"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15">
+			<p:column headerText="amount" >
+            	<h:outputText  value="#{item.chargeAmount}" />
+        	</p:column>
+			<p:column headerText="Timestamp">
+            	<h:outputText value="#{item.timeStamp}" />
+        	</p:column>
+        	<p:column headerText="Service">
+            	<h:outputText value="#{item.service}" />
+        	</p:column>
+		</p:dataTable>	
+	</h:form>
+	</div>
+</h:body>
+</html>

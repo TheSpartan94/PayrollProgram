@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+<h:outputStylesheet library="css" name="screen.css"  />
+<h:outputStylesheet library="css" name="pm.css"  />
+<div id="header">
+
+		<h:outputText styleClass="title" style="margin-right: 30%; margin-top: 4%; float: center;" value="Payroll project"/> 
+		<br></br>
+		<h1  align="center">Change Payment Method</h1>
+		<br/>
+		<h:form>
+		<ol id="user" style="list-style-type:none;float:right;margin-top:-12%;margin-left: 20%;font-size:1.2em;border: 4px solid; background-color: white; width: 20%;">
+		<li>
+		<h:outputText styleClass="text-output"  value="Id: "/> 
+		<h:outputText styleClass="text-output"  value="#{ChangepmBean.getid()}"/>
+		</li>
+		<li>
+		<h:outputText styleClass="text-output"  value="Full Name:  "/>
+		<h:outputText styleClass="text-output"  value="#{ChangepmBean.getfullname()}"/>
+		</li>
+		<li>
+		<h:outputText styleClass="text-output"  value="your Union:  "/>
+		<h:outputText styleClass="text-output"  value="#{ChangepmBean.getUnioname()}"/>
+		</li>
+		<li>
+		 <h:outputText styleClass="text-output"  value="Payment Method:"/> 
+		 <h:outputText styleClass="text-output"  value="#{ChangepmBean.getPaymentMethodname()}"/>  
+		</li>
+		<li>
+			<h:outputText styleClass="text-output"  value="Payment Type:"/> 
+		   <h:outputText styleClass="text-output"  value="#{ChangepmBean.getPaymentMethodType()}"/>  
+		   </li>
+		</ol>
+	</h:form>
+</div>
+<title>Choose your payment method</title>
+</h:head>
+<h:body>
+		<h3>Your payment method details:</h3>
+
+
+<div class="choose">
+
+   <h:form>
+   		<p:panelGrid>
+		   <p:row>
+		   <p:column><h:outputText styleClass="text-output"  value=" via: #{ChangepmBean.getPMType()}"/></p:column>
+		   <p:column><h:selectOneMenu value="#{ChangepmBean.selectedtype}">
+		   			 <f:selectItems value="#{ChangepmBean.types}" />					
+				</h:selectOneMenu>	</p:column>
+		   </p:row>
+		   <p:row>
+		   <p:column><h:outputText styleClass="text-output"  value="Bank details: #{ChangepmBean.getAddress()}"/></p:column>
+		   <p:column><h:inputText styleClass="text-output"  value="#{ChangepmBean.newaddress}"/>
+		   </p:column>
+		   </p:row>
+		</p:panelGrid>
+		<h:commandButton styleClass="button" update=":msgDialog"  id="confirmbutton"  binding="#{ChangepmBean.confirmButton}" value="Confirm" action="#{ChangepmBean.change()}"/>
+		
+		 
+		  <p:dialog id="msgDialog" widgetVar="messageDialog" modal="true" appendToBody="true"
+   		 visible="#{not empty facesContext.messageList}">
+   		 <p:messages id="messagesInDialog" />
+		</p:dialog>
+	</h:form>
+</div>
+</h:body>
+</html>

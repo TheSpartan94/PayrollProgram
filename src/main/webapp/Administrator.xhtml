@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+<h:outputStylesheet library="css" name="screen.css"  />
+
+<title>Administrator</title>
+</h:head>
+<h:body>
+<div id="header">
+	<div style="margin-left: 5%;float: left; width:150px;">
+		<h:form>
+		<p>Click here to log out.</p>
+		<h:commandButton styleClass="button" value="log out" action="#{AdministratorBean.Logout()}" />
+		</h:form>
+	</div>
+		<h:outputText styleClass="title" style="margin-right: 30%; margin-top: -10%; float: center;" value="Payroll project"/> 
+		<br></br>
+		<h1  align="center">Administrator Control Panel</h1>
+		<br/>
+		<h:form>
+		<ol id="user" style="list-style-type:none;float:right;margin-top:-12%;margin-left: 20%;font-size:1.2em;border: 4px solid; background-color: white; width: 20%;">
+		<li>
+		<h:outputText styleClass="text-output"  value="Id: "/> 
+		<h:outputText styleClass="text-output"  value="#{AdministratorBean.getId()}"/>
+		</li>
+		</ol>
+	</h:form>
+</div>
+<div class="operation">
+	<h1 align="center">Registered Unions</h1> 
+		<br/>
+	<h:form id="form_all_union" >
+	<p:dataTable var="item" value="#{AdministratorBean.unions}" rows="10"
+                         paginator="true"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15">
+			<p:column headerText="Id" >
+            	<h:outputText  value="#{item.id}" />
+        	</p:column>
+        	<p:column headerText="Name">
+            	<h:outputText value="#{item.name}" />
+        	</p:column>
+			<p:column headerText="Service charge count">
+            	<h:outputText value="#{item.serviceCharges.size()}" />
+        	</p:column>
+        	<p:column headerText="">
+        	    <h:commandButton update=":msgDialog"  id="confirmbutton"  binding="#{AdministratorBean.confirmButton}" action="#{AdministratorBean.DeleteUnion(item)}" value="delete" />
+		 
+		  <p:dialog id="msgDialog" widgetVar="messageDialog" modal="true" appendToBody="true"
+   		 visible="#{not empty facesContext.messageList}">
+   		 <p:messages id="messagesInDialog" />
+		</p:dialog>
+        	</p:column>
+		</p:dataTable>
+	</h:form>
+	<h1 align="center">Registered Employees</h1> 
+	<br/>
+	<h:form id="form_all_employee" >
+	<p:dataTable var="item" value="#{AdministratorBean.employees}" rows="10"
+                         paginator="true"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15">
+			<p:column headerText="Id" >
+            	<h:outputText  value="#{item.id}" />
+        	</p:column>
+        	<p:column headerText="Fiscal code ">
+            	<h:outputText value="#{item.CF}" />
+        	</p:column>
+        	<p:column headerText="Name">
+            	<h:outputText value="#{item.fullName}" />
+        	</p:column>
+			<p:column headerText="Pay day">
+            	<h:outputText value="#{item.dayToBePaid}" />
+        	</p:column>
+        	<p:column headerText="Type ">
+            	<h:outputText value="#{AdministratorBean.getType(item)}" />
+        	</p:column>
+        	<p:column headerText="Union">
+            	<h:outputText value="#{AdministratorBean.UnionName(item)}" />
+        	</p:column>
+        	<p:column headerText="">
+        	     <h:commandButton action="#{AdministratorBean.DeleteEmployee(item)}" value="delete" />
+        	</p:column>
+        	<p:column headerText="">
+        	     <h:commandButton action="#{AdministratorBean.ModifyEmployee(item)}" value="modify" />
+        	</p:column>
+		</p:dataTable>
+	</h:form>
+	</div>
+	
+	<div align= "center" style="margin-top: 10px;margin-bottom: 30px;">
+		<h:form>
+		<h:commandButton style="margin: 4px;" styleClass="button" action="#{AdministratorBean.AddEmployee()}" value="Add a new employee" />
+		<h:commandButton style="margin: 4px;" styleClass="button" action="#{AdministratorBean.AddUnion()}" value="Add a new union" />
+		<h:commandButton style="margin: 4px;" styleClass="button" value="Run Payroll" action="#{AdministratorBean.RunPayroll()}"/>
+		</h:form>
+	</div>
+	
+
+</h:body>
+</html>

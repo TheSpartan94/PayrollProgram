@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+<h:outputStylesheet library="css" name="login.css"  />
+<h:outputStylesheet library="css" name="screen.css"  />
+<title>Login page</title>
+</h:head>
+<h:body>
+<div id="header">
+		<h:outputText styleClass="title" style="margin-right: 30%; margin-top: 0%; float: center;" value="Payroll project"/> 
+</div>
+<div class="container" align="center">
+	<h:form id="page">
+		<h3> Login</h3>
+		<h:outputText value="Id" />
+		<br></br>
+		<h:inputText id="username" value="#{LoginBean.id}"></h:inputText>
+		<h:message for="username"></h:message >
+		<br></br><br></br>
+		
+		<h:outputText value="Password" />
+		<br></br>
+		<h:inputSecret id="password" value="#{LoginBean.pwd}"/>
+		<h:message for="password"></h:message >
+		<br></br><br></br>
+		<h:commandButton value="Login" update=":msgDialog"  id="loginbutton"  binding="#{LoginBean.loginbutton}" action="#{LoginBean.validate()}" />
+		
+		<p:dialog id="msgDialog" widgetVar="messageDialog" modal="true" appendToBody="true"
+   		 visible="#{not empty facesContext.messageList}">
+   		 <p:messages id="messagesInDialog" />
+		</p:dialog>
+	</h:form>
+</div>
+<p id="text"> Welcome to the login panel. Type your user id to login into the system. 
+If you're not registered, you aren't allowed to access. 
+If you're already a member but can't remember your credentials, contact a system administrator.</p>
+</h:body>
+</html>

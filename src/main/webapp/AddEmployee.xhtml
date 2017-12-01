@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<h:outputStylesheet library="css" name="screen.css" />
+	<h:outputStylesheet library="css" name="pm.css" />
+	<title>Administrator - Add a new employee</title>
+</h:head>
+<h:body>
+<div id="header">
+	<div style="margin-left: 5%;float: left; width:150px;">
+		<h:form>
+		<p>Click here to log out.</p>
+		<h:commandButton styleClass="button" value="log out" action="#{AdministratorBean.Logout()}" />
+		</h:form>
+	</div>
+		<h:outputText styleClass="title" style="margin-right: 30%; margin-top: -10%; float: center;" value="Payroll project"/> 
+		<br></br>
+		<h1  align="center">Administrator Control Panel</h1>
+		<br/>
+		<h:form>
+		<ol id="user" style="list-style-type:none;float:right;margin-top:-12%;margin-left: 20%;font-size:1.2em;border: 4px solid; background-color: white; width: 20%;">
+		<li>
+		<h:outputText styleClass="text-output"  value="Id: "/> 
+		<h:outputText styleClass="text-output"  value="#{AdministratorBean.getId()}"/>
+		</li>
+		</ol>
+	</h:form>
+</div>
+	<div id="add_employee_form" align="center">
+	<h1>Add a new Employee</h1>
+		<h:form >
+			<p:panelGrid >
+				<p:row>
+				<p:column>
+					<h:outputText styleClass="text-output" value="Select the emloyee type:" />
+				</p:column>
+				<p:column>
+					<h:selectOneMenu value="#{AddEmployeeBean.employee_selected_type}">
+						<f:selectItem itemValue="Flat employee" itemLabel="Flat employee" />
+						<f:selectItem itemValue="Time employee" itemLabel="Time employee" />
+						<f:selectItem itemValue="Commission employee" itemLabel="Commission employee" />
+					   <f:ajax event="valueChange"  render="@form" listener="#{AddEmployeeBean.Display()}"/>
+					 </h:selectOneMenu>
+				</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<h:outputText styleClass="text-output" value="Fiscal Code" />
+					</p:column>
+					<p:column>
+						<h:inputText value="#{AddEmployeeBean.CF}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<h:outputText styleClass="text-output" value="Password" />
+					</p:column>
+					<p:column>
+						<h:inputSecret value="#{AddEmployeeBean.password}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<h:outputText styleClass="text-output" value="Full name" />
+					</p:column>
+					<p:column>
+						<h:inputText value="#{AddEmployeeBean.fullname}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<h:outputText styleClass="text-output" value="Select a union" />
+					</p:column>
+					<p:column>
+						<h:selectOneMenu value="#{AddEmployeeBean.unionName}">
+							<f:selectItems value="#{AddEmployeeBean.union_names}" />
+						</h:selectOneMenu>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<h:outputText styleClass="text-output" value="Day tobe paid" />
+					</p:column>
+					<p:column>
+						<h:inputText type="date" value="#{AddEmployeeBean.daytobepaid}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<h:outputText styleClass="text-output" value="Payment method type" />
+					</p:column>
+					<p:column>
+						<h:selectOneMenu value="#{AddEmployeeBean.choosen_pm_type}">
+							<f:selectItems value="#{AddEmployeeBean.pm_types}" />
+						</h:selectOneMenu>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<h:outputText styleClass="text-output" value="Payment address" />
+					</p:column>
+					<p:column>
+						<h:inputText value="#{AddEmployeeBean.payAddress}" />
+					</p:column>
+				</p:row>
+				<p:row id="FE" rendered="#{AddEmployeeBean.display_fe}">
+					<p:column>
+						<h:outputText styleClass="text-output" value="Salary" />
+					</p:column>
+					<p:column>
+						<h:inputText value="#{AddEmployeeBean.fe_salary}" />
+					</p:column>
+				</p:row>
+				
+				<p:row id="TE"  rendered="#{AddEmployeeBean.display_te}">
+					<p:column>
+						<h:outputText styleClass="text-output" value="Hour rate" />
+					</p:column>
+					<p:column>
+						<h:inputText value="#{AddEmployeeBean.te_hourrate}" />
+					</p:column>
+				</p:row>
+				<p:row id="CE" rendered="#{AddEmployeeBean.display_ce}">
+					<p:column>
+						<h:outputText styleClass="text-output" value="Commission Amount" />
+					</p:column>
+					<p:column>
+						<h:inputText value="#{AddEmployeeBean.ce_amount}" />
+					</p:column>
+				</p:row>
+				<p:row id="CEbis" rendered="#{AddEmployeeBean.display_ce}">
+					<p:column>
+						<h:outputText styleClass="text-output" value="Commission base" />
+					</p:column>
+					<p:column>
+						<h:inputText value="#{AddEmployeeBean.ce_base}" />
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+			<h:commandButton  update=":msgDialog"  id="confirmbutton"  binding="#{AddEmployeeBean.confirmButton}"  value="Confirm" action="#{AddEmployeeBean.AddEmployee()}" />
+			
+		 
+		  <p:dialog id="msgDialog" widgetVar="messageDialog" modal="true" appendToBody="true"
+   		 visible="#{not empty facesContext.messageList}">
+   		 <p:messages id="messagesInDialog" />
+		</p:dialog>
+
+		</h:form>
+	</div>
+</h:body>
+</html>

@@ -1,0 +1,64 @@
+@CHARSET "ISO-8859-1";
+
+.text-output {
+	
+    line-height: 0.4em;
+	margin: 0.1em;
+	position: right;
+}
+
+.go-back{
+		float: left;	
+		margin: 1em;
+}
+
+.title{
+	float: left;
+	display: inline-block;	
+	margin: 1em;
+	margin-left: 30%;
+	font-size: 1.5em;
+}
+
+body{
+	padding: 0.7em
+}
+.header{
+	
+	text-align: left;
+	border: solid black 0.1em;
+	position: relative;
+    right: 0px;
+    width: 100%;
+}
+
+ form{
+	border: 0px;
+	font-size: 1em;
+	padding: 0px;
+	padding-bottom: 0.5em;
+	width: 100%;
+}
+
+#logout{
+	float: left;	
+		margin: 1em;
+	
+}
+
+.header form{
+	padding-left: 80%;
+	
+}
+
+ h3{
+	padding: 0px;
+	padding-bottom: 0.1em;
+}
+
+.choose {
+	position: relative;
+	width:  100%;
+	
+}
+
